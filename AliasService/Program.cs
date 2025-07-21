@@ -23,9 +23,7 @@ static class Program
 
     private static AliasRunner runner;
     
-    /// <summary>
-    ///  The main entry point for the application.
-    /// </summary>
+
     [STAThread]
     static void Main()
     {
@@ -67,8 +65,6 @@ static class Program
         contextMenu.Items.Add(exitItem);
         trayIcon.ContextMenuStrip = contextMenu;
         
-        
-        // Optionally handle double-click
         trayIcon.DoubleClick += (s, e) =>
         {
             MainAction();
@@ -77,12 +73,10 @@ static class Program
         // Create a hidden form to handle hotkey messages
         using (var messageWindow = new HotkeyWindow(MainAction))
         {
-            // Register Ctrl + Shift + R (0x52)
             RegisterHotKey(messageWindow.Handle, HOTKEY_ID, MOD_CONTROL | MOD_SHIFT | MOD_NOREPEAT, (uint)Keys.R);
 
             Application.Run();
-
-            // Clean up
+            
             UnregisterHotKey(messageWindow.Handle, HOTKEY_ID);
         }
     }
@@ -95,7 +89,6 @@ static class Program
         if (!runner.RunAlias(result)) MessageBox.Show("Alias not found", "Error");
     }
     
-    // A simple input dialog
     private static string ShowInputDialog(string prompt)
     {
         Form inputForm = new Form()
