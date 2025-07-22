@@ -13,6 +13,8 @@ public class FileReader<T>(string path, Func<string, T> lineTransformer){
                 yield return lineTransformer.Invoke(line);
             }
         }
+        
+        streamReader.Close();
     }
         
 }

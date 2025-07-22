@@ -71,14 +71,12 @@ static class Program
         };
 
         // Create a hidden form to handle hotkey messages
-        using (var messageWindow = new HotkeyWindow(MainAction))
-        {
-            RegisterHotKey(messageWindow.Handle, HOTKEY_ID, MOD_CONTROL | MOD_SHIFT | MOD_NOREPEAT, (uint)Keys.R);
+        using var messageWindow = new HotkeyWindow(MainAction);
+        RegisterHotKey(messageWindow.Handle, HOTKEY_ID, MOD_CONTROL | MOD_SHIFT | MOD_NOREPEAT, (uint)Keys.R);
 
-            Application.Run();
+        Application.Run();
             
-            UnregisterHotKey(messageWindow.Handle, HOTKEY_ID);
-        }
+        UnregisterHotKey(messageWindow.Handle, HOTKEY_ID);
     }
 
 
