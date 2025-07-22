@@ -82,7 +82,7 @@ static class Program
 
     private static void MainAction()
     {
-        var result = ShowInputDialog("What's your name?");
+        var result = ShowInputDialog("Alias:");
         if (string.IsNullOrWhiteSpace(result)) MessageBox.Show("Please enter a alias", "Error");
         if (!runner.RunAlias(result)) MessageBox.Show("Alias not found", "Error");
     }

@@ -1,9 +1,13 @@
-﻿using AliasService.Utils;
+﻿using System.Diagnostics;
+using System.Text.RegularExpressions;
+using AliasService.Utils;
 
 namespace AliasService.Runner;
 
 public class AliasRunner
 {
+
+    private readonly string _nonUrlPattern = @"^[A-Z]:\\";
     
     private Dictionary<string, string> _aliases;
     private const char Splitter = '=';
@@ -30,7 +34,20 @@ public class AliasRunner
     {
         if (_aliases.TryGetValue(alias, out var exe))
         {
-            System.Diagnostics.Process.Start(exe);
+            var regex = new Regex(_nonUrlPattern, RegexOptions.IgnoreCase);
+            if (regex.IsMatch(exe))
+            {
+                Process.Start(exe);
+                return true;
+            }
+
+            var psi = new ProcessStartInfo
+            {
+                FileName = exe,
+                UseShellExecute = true
+            };
+
+            Process.Start(psi);
             return true;
         }
         
